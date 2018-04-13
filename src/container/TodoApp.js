@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import Todos from '../components/Todos';
 import AddTodo from '../components/AddTodo';
 
@@ -13,7 +14,7 @@ class TodoApp extends Component {
       title: 'Todo two',
       completed: false
     }]
-  }
+  };
 
   addTodo = title => {
     const todos = [...this.state.todos];
@@ -25,25 +26,25 @@ class TodoApp extends Component {
           title,
           completed: false
         }]
-    })
-  }
+    });
+  };
 
   changeTodoState = id => {
-    const todos = [...this.state.todos].map((todo) => todo.id === id ? {...todo, completed: !todo.completed} : todo);
-    this.setState({
-      todos
-    })
-  }
+    const todos = this.state.todos.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo);
+    this.setState({todos});
+  };
 
   render() {
     return (
       <div>
         <AddTodo clicked={this.addTodo}/>
-        <Todos todos={this.state.todos} clicked={this.changeTodoState}/>
+        <Todos
+          todos={this.state.todos}
+          clicked={this.changeTodoState}
+        />
       </div>
-    )
+    );
   }
 }
-
 
 export default TodoApp;
