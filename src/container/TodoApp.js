@@ -5,16 +5,15 @@ import AddTodo from '../components/AddTodo';
 
 class TodoApp extends Component {
   state = {
-    todos: [{
-      id: 0,
-      title: 'Todo one',
-      completed: true
-    }, {
-      id: 1,
-      title: 'Todo two',
-      completed: false
-    }]
+    todos: null
   };
+
+  async componentDidMount() {
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+    const todos = await response.json();
+
+    this.setState({todos});
+  }
 
   addTodo = title => {
     const todos = [...this.state.todos];
@@ -35,13 +34,21 @@ class TodoApp extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <AddTodo clicked={this.addTodo}/>
+    let todos = <p>Loading...</p>;
+
+    if (this.state.todos) {
+      todos = (
         <Todos
           todos={this.state.todos}
           clicked={this.changeTodoState}
         />
+      );
+    }
+
+    return (
+      <div>
+        <AddTodo clicked={this.addTodo}/>
+        {todos}
       </div>
     );
   }
