@@ -9,8 +9,10 @@ const todos = (props) => {
           props.todos.map((todo) => {
             return <Todo
                     key={todo.id}
+                    id={todo.id}
                     title={todo.title}
-                    completed={todo.completed}/>
+                    completed={todo.completed}
+                    clicked={props.clicked} />
           })
         }
       </ul>

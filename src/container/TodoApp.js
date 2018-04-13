@@ -28,11 +28,18 @@ class TodoApp extends Component {
     })
   }
 
+  changeTodoState = id => {
+    const todos = [...this.state.todos].map((todo) => todo.id === id ? {...todo, completed: !todo.completed} : todo);
+    this.setState({
+      todos
+    })
+  }
+
   render() {
     return (
       <div>
         <AddTodo clicked={this.addTodo}/>
-        <Todos todos={this.state.todos} />
+        <Todos todos={this.state.todos} clicked={this.changeTodoState}/>
       </div>
     )
   }

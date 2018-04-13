@@ -6,6 +6,7 @@ class AddTodo extends Component {
   }
 
   onChangeHandler = (event) => {
+    console.log();
     this.setState({todoName: event.target.value})
   }
 
