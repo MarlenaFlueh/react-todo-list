@@ -5,18 +5,35 @@ import AddTodo from '../components/AddTodo';
 
 class TodoApp extends Component {
   state = {
-    todos: null
+    todos: ''
   };
 
   async componentDidMount() {
-    const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+    const response = await fetch('https://second-todo-app.firebaseio.com/todos.json');
     const todos = await response.json();
+    const newTodos = [];
 
-    this.setState({todos});
+    for (let key in todos) {
+      newTodos.push({
+        id: key,
+        ...todos[key]
+      })
+    }
+
+    this.setState({todos: newTodos});
   }
-
-  addTodo = title => {
+  
+  addTodo = async title => {
     const todos = [...this.state.todos];
+
+    await fetch('https://second-todo-app.firebaseio.com/todos.json', {
+      method: 'post',
+      body: JSON.stringify({
+        title,
+        completed: false
+      })
+    });
+
     this.setState({
       todos: [
         ...todos,
